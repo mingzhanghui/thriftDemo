@@ -2,15 +2,15 @@ package main
 
 import (
 	"ThriftDemo/example"
-	"strings"
-	"git.apache.org/thrift.git/lib/go/thrift"
 	"fmt"
+	"git.apache.org/thrift.git/lib/go/thrift"
 	"log"
+	"strings"
 )
 
-type FormatDataImpl struct {}
+type FormatDataImpl struct{}
 
-func (fdi *FormatDataImpl) DoFormat(data *example.Data) (r *example.Data, err error){
+func (fdi *FormatDataImpl) DoFormat(data *example.Data) (r *example.Data, err error) {
 	var rData example.Data
 	rData.Text = strings.ToUpper(data.Text)
 
@@ -22,8 +22,8 @@ func (fdi *FormatDataImpl) DoFormat(data *example.Data) (r *example.Data, err er
 //}
 
 const (
-	HOST = "localhost"
-	PORT = "8080"
+	HOST = "0.0.0.0"
+	PORT = "8030"
 )
 
 func main() {
@@ -38,6 +38,6 @@ func main() {
 	protocolFactory := thrift.NewTBinaryProtocolFactoryDefault()
 
 	server := thrift.NewTSimpleServer4(processor, serverTransport, transportFactory, protocolFactory)
-	fmt.Println("Running at:", HOST + ":" + PORT)
+	fmt.Println("Running at:", HOST+":"+PORT)
 	server.Serve()
 }

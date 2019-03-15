@@ -1,19 +1,19 @@
 package main
 
 import (
-	"git.apache.org/thrift.git/lib/go/thrift"
-	"net"
-	"fmt"
 	"ThriftDemo/example"
+	"fmt"
+	"git.apache.org/thrift.git/lib/go/thrift"
 	"log"
+	"net"
 )
 
 const (
-	HOST = "localhost"
-	PORT = "8080"
+	HOST = "172.16.0.224"
+	PORT = "8030"
 )
 
-func main()  {
+func main() {
 	tSocket, err := thrift.NewTSocket(net.JoinHostPort(HOST, PORT))
 	if err != nil {
 		log.Fatalln("tSocket error:", err)
@@ -28,12 +28,11 @@ func main()  {
 	client := example.NewFormatDataClientFactory(transport, protocolFactory)
 
 	if err := transport.Open(); err != nil {
-		log.Fatalln("Error opening:", HOST + ":" + PORT)
+		log.Fatalln("Error opening:", HOST+":"+PORT)
 	}
 	defer transport.Close()
 
-
-	data := example.Data{Text:"hello,world!"}
+	data := example.Data{Text: "hello,world!"}
 	d, err := client.DoFormat(&data)
 	fmt.Println(d.Text)
 }
